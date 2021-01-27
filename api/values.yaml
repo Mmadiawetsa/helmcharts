@@ -41,13 +41,18 @@ service:
   port: 80
 
 ingress:
-  enabled: false
-  annotations: {}
-    # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
+  enabled: true
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/rewrite-target: /
   hosts:
-    - host: chart-example.local
-      paths: []
+    - host: kube.privateproperty.cloud
+      paths:
+        - path: /
+          backend:
+            serviceName: api
+            servicePort: 80
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:
